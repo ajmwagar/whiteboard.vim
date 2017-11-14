@@ -87,29 +87,29 @@ let s:ds = {}
 
 " fill it with absolute colors
 let s:ds.dark0       = ['#2C323B', 235]     " 40-40-40
-let s:ds.dark1       = ['#3c3836', 237]     " 60-56-54
+let s:ds.dark1       = ['#666666', 237]     " 60-56-54
 let s:ds.dark2       = ['#2C313A', 239]     " 80-73-69
-let s:ds.dark3       = ['#665c54', 241]     " 102-92-84
+let s:ds.dark3       = ['#333333', 241]     " 102-92-84
 let s:ds.dark4       = ['#7c6f64', 243]     " 124-111-100
 let s:ds.dark4_256       = ['#7c6f64', 243]     " 124-111-100
 
-let s:ds.gray_245    = ['#928374', 245]     " 146-131-116
-let s:ds.gray_244    = ['#928374', 244]     " 146-131-116
+let s:ds.gray_245    = ['#666666', 245]     " 146-131-116
+let s:ds.gray_244    = ['#333333', 244]     " 146-131-116
 
-let s:ds.light0      = ['#d2d2d2', 229]     " 253-244-193
+let s:ds.light0      = ['#eeeeee', 229]     " 253-244-193
 let s:ds.light1      = ['#ebdbb2', 223]     " 235-219-178
-let s:ds.light2      = ['#d5c4a1', 250]     " 213-196-161
+let s:ds.light2      = ['#c0c0c0', 250]     " 213-196-161
 let s:ds.light3      = ['#bdae93', 248]     " 189-174-147
-let s:ds.light4      = ['#a89984', 246]     " 168-153-132
+let s:ds.light4      = ['#333333', 246]     " 168-153-132
 let s:ds.light4_256  = ['#a89984', 246]     " 168-153-132
 
-let s:ds.bright_red     = ['#fb4934', 167]     " 251-73-52
-let s:ds.bright_green   = ['#98C379', 142]     " 184-187-38
-let s:ds.bright_yellow  = ['#fabd2f', 214]     " 250-189-47
-let s:ds.bright_blue    = ['#83a598', 109]     " 131-165-152
-let s:ds.bright_purple  = ['#C678DD', 175]     " 211-134-155
+let s:ds.bright_red     = ['#A3586D', 167]     " 251-73-52
+let s:ds.bright_green   = ['#00743F', 142]     " 184-187-38
+let s:ds.bright_yellow  = ['#F3B05A', 214]     " 250-189-47
+let s:ds.bright_blue    = ['#595775', 109]     " 131-165-152
+let s:ds.bright_purple  = ['#BD3E85', 175]     " 211-134-155
 let s:ds.bright_aqua    = ['#8ec07c', 108]     " 142-192-124
-let s:ds.bright_orange  = ['#fe8019', 208]     " 254-128-25
+let s:ds.bright_orange  = ['#F46A4E', 208]     " 254-128-25
 
 " }}}
 " Setup Emphasis: {{{
@@ -376,12 +376,6 @@ call s:HL('Normal', s:fg1, s:bg0)
 " Correct background (see issue #7):
 " --- Problem with changing between dark and light on 256 color terminal
 " --- https://github.com/morhetz/deus/issues/7
-if s:is_dark
-  set background=dark
-else
-  set background=light
-endif
-
 if version >= 700
   " Screen line that the cursor is
   call s:HL('CursorLine',   s:none, s:bg1)
@@ -407,7 +401,7 @@ if version >= 703
   call s:HL('Conceal', s:blue, s:none)
 
   " Line number of CursorLine
-  call s:HL('CursorLineNr', s:yellow, s:bg1)
+  call s:HL('CursorLineNr', s:yellow, s:fg1)
 endif
 
 hi! link NonText deusBg2
@@ -416,12 +410,12 @@ hi! link SpecialKey deusBg2
 call s:HL('Visual',    s:none,  s:bg3, s:invert_selection)
 hi! link VisualNOS Visual
 
-call s:HL('Search',    s:bg0, s:yellow)
-call s:HL('IncSearch', s:bg0, s:hls_cursor)
+call s:HL('Search',    s:fg0, s:yellow)
+call s:HL('IncSearch', s:fg0, s:hls_cursor)
 
 call s:HL('Underlined', s:blue, s:none, s:underline)
 
-call s:HL('StatusLine',   s:bg4, s:bg0, s:bold . s:inverse)
+call s:HL('StatusLine',   s:bg4, s:fg0, s:bold . s:inverse)
 call s:HL('StatusLineNC', s:bg2, s:fg4, s:bold . s:inverse)
 
 " The column separating vertically split windows
@@ -457,7 +451,7 @@ call s:HL('LineNr', s:number_column)
 call s:HL('SignColumn', s:none, s:sign_column)
 
 " Line used for closed folds
-call s:HL('Folded', s:gray, s:bg1, s:italic)
+call s:HL('Folded', s:fg1, s:bg0, s:italic)
 " Column where folds are displayed
 call s:HL('FoldColumn', s:gray, s:bg1)
 
@@ -1073,16 +1067,16 @@ call s:HL('markdownItalic', s:fg3, s:none, s:italic)
 
 hi! link markdownH1 deusGreenBold
 hi! link markdownH2 deusGreenBold
-hi! link markdownH3 deusYellowBold
-hi! link markdownH4 deusYellowBold
-hi! link markdownH5 deusYellow
-hi! link markdownH6 deusYellow
+hi! link markdownH3 deusAquaBold
+hi! link markdownH4 deusAquaBold
+hi! link markdownH5 deusPurple
+hi! link markdownH6 deusPurple
 
-hi! link markdownCode deusAqua
-hi! link markdownCodeBlock deusAqua
-hi! link markdownCodeDelimiter deusAqua
+hi! link markdownCode deusRed
+hi! link markdownCodeBlock deusRed
+hi! link markdownCodeDelimiter deusRedBold
 
-hi! link markdownBlockquote deusGray
+hi! link markdownBlockquote deusYellow
 hi! link markdownListMarker deusGray
 hi! link markdownOrderedListMarker deusGray
 hi! link markdownRule deusGray
@@ -1148,7 +1142,7 @@ hi! link jsonString deusFg1
 " Search Highlighting Cursor {{{
 
 function! DeusHlsShowCursor()
-  call s:HL('Cursor', s:bg0, s:hls_cursor)
+  call s:HL('Cursor', s:fg0, s:hls_cursor)
 endfunction
 
 function! DeusHlsHideCursor()
